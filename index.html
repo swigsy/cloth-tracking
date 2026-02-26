@@ -15,138 +15,191 @@
   --bg:#0d0d12;--panel:#13131a;--card:#1a1a22;--card2:#20202a;
   --border:#2e2e3e;--border-g:rgba(200,168,75,.3);
   --moon:#7ec8e3;--shad:#9b59b6;--spell:#e74c3c;
-  --ready:#2ecc71;--warn:#f39c12;--cd:#e74c3c;
+  --ready:#2ecc71;--warn:#f39c12;--danger:#e74c3c;
   --text:#d4c9a0;--dim:#706858;--friend:#5d8aa8;
+  --claim:#3a9d6e;--mats:#d4822a;--upcoming:#8b6fc7;
   --r:10px;
 }
-body{background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;min-height:100vh;padding-bottom:80px;}
 input,select,button{font-family:inherit;font-size:1rem;}
 button{cursor:pointer;}
-input[type=checkbox]{width:22px;height:22px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
 select{-webkit-appearance:none;}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);}
 
 /* ── Header ── */
-header{text-align:center;padding:clamp(14px,4vw,24px) 16px 12px;
+header{text-align:center;padding:clamp(12px,3vw,20px) 16px 10px;
   border-bottom:1px solid var(--border-g);
   background:linear-gradient(180deg,rgba(200,168,75,.07) 0%,transparent 100%);}
-h1{font-family:'Cinzel',serif;font-size:clamp(17px,5vw,24px);color:var(--gold-l);
+h1{font-family:'Cinzel',serif;font-size:clamp(16px,4.5vw,22px);color:var(--gold-l);
   letter-spacing:.12em;text-shadow:0 0 28px rgba(200,168,75,.4);font-weight:700;}
-.sub{color:var(--dim);font-size:11px;margin-top:3px;letter-spacing:.08em;}
+.sub{color:var(--dim);font-size:10px;margin-top:2px;letter-spacing:.08em;}
+.hdr-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;}
 
-/* ── Layout ── */
-.wrap{max-width:1160px;margin:0 auto;padding:14px 12px 60px;}
+/* ── Nav tabs ── */
+.nav-tabs{display:flex;overflow-x:auto;gap:2px;padding:0 12px;
+  background:var(--panel);border-bottom:1px solid var(--border);
+  scrollbar-width:none;position:sticky;top:0;z-index:98;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nav-tab{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.06em;
+  padding:12px 16px;white-space:nowrap;background:none;border:none;
+  color:var(--dim);border-bottom:2px solid transparent;flex-shrink:0;
+  transition:color .15s,border-color .15s;position:relative;}
+.nav-tab:active{color:var(--gold);}
+.nav-tab.active{color:var(--gold-l);border-bottom-color:var(--gold);}
+.nav-tab .tab-badge{display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:50%;font-size:9px;font-family:sans-serif;font-weight:700;
+  margin-left:5px;vertical-align:middle;}
+.tab-badge.red{background:var(--danger);color:#fff;}
+.tab-badge.orange{background:var(--warn);color:#000;}
+.tab-badge.green{background:var(--claim);color:#fff;}
 
-/* ── Summary ── */
-.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.sum-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
-  padding:10px 6px;text-align:center;position:relative;overflow:hidden;}
-.sum-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.sum-card.moon::after{background:var(--moon);}
-.sum-card.shad::after{background:var(--shad);}
-.sum-card.spell::after{background:var(--spell);}
-.sum-name{font-family:'Cinzel',serif;font-size:clamp(8px,2vw,10px);letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px;}
-.sum-card.moon .sum-name{color:var(--moon);}
-.sum-card.shad .sum-name{color:var(--shad);}
-.sum-card.spell .sum-name{color:var(--spell);}
-.sum-n{font-family:'Cinzel',serif;font-size:clamp(20px,5vw,28px);font-weight:700;color:var(--ready);line-height:1;}
-.sum-of{font-size:10px;color:var(--dim);margin-top:2px;}
-.sum-pcs{font-size:10px;color:var(--dim);}
+/* ── Page panels ── */
+.page{display:none;max-width:860px;margin:0 auto;padding:14px 12px 20px;}
+.page.active{display:block;}
 
-/* ── Alerts ── */
-#alerts{margin-bottom:12px;}
-.alert{border-radius:8px;padding:10px 12px;font-size:13px;display:flex;
-  align-items:flex-start;gap:8px;margin-bottom:7px;line-height:1.5;}
-.alert.urgent{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);}
-.alert.warn{background:rgba(243,156,18,.1);border:1px solid rgba(243,156,18,.28);}
+/* ── Dashboard cards ── */
+.dash-section{margin-bottom:20px;}
+.dash-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.dash-title .icon{font-size:15px;}
+.dash-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── Controls ── */
-.ctrl{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.search{background:var(--card);border:1px solid var(--border);color:var(--text);
-  font-size:16px;padding:11px 13px;border-radius:var(--r);flex:1;min-width:120px;outline:none;}
-.search::placeholder{color:var(--dim);}
-.search:focus{border-color:var(--border-g);}
+/* Action cards on dashboard */
+.action-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px 14px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px;}
+.action-card.urgent{border-left:3px solid var(--danger);}
+.action-card.warn{border-left:3px solid var(--warn);}
+.action-card.upcoming{border-left:3px solid var(--upcoming);}
+.action-card.claimed{border-left:3px solid var(--claim);}
+.action-card.mats-sent{border-left:3px solid var(--mats);opacity:.75;}
+.ac-top{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+.ac-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.ac-body{flex:1;min-width:0;}
+.ac-title{font-size:14px;color:var(--text);line-height:1.4;}
+.ac-title b{color:var(--gold-l);}
+.ac-sub{font-size:12px;color:var(--dim);margin-top:2px;line-height:1.4;}
+.ac-time{font-family:'Cinzel',serif;font-size:13px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.ac-time.ready{color:var(--ready);}
+.ac-time.soon{color:var(--warn);}
+.ac-time.upcoming{color:var(--upcoming);}
+.ac-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;}
 
-/* ── Buttons ── */
-.btn{background:var(--card2);border:1px solid var(--border-g);color:var(--gold);
-  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;
-  padding:11px 15px;border-radius:var(--r);min-height:44px;}
-.btn:active{background:rgba(200,168,75,.2);}
-.btn-p{background:rgba(200,168,75,.17);border:1px solid var(--gold);color:var(--gold-l);
-  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;
-  padding:11px 15px;border-radius:var(--r);min-height:44px;}
-.btn-p:active{background:rgba(200,168,75,.3);}
-.btn-d{background:none;border:1px solid rgba(231,76,60,.4);color:var(--cd);
-  font-family:'Cinzel',serif;font-size:10px;padding:7px 12px;border-radius:8px;min-height:36px;}
-.btn-d:active{background:rgba(231,76,60,.15);}
-.btn-g{background:none;border:1px dashed var(--border);color:var(--dim);
-  font-size:13px;padding:8px 12px;border-radius:8px;min-height:36px;}
-.btn-g:active{border-color:var(--gold-d);color:var(--gold);}
-.btn-green{background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.4);color:var(--ready);
-  font-family:'Cinzel',serif;font-size:11px;padding:11px 15px;border-radius:var(--r);min-height:44px;}
-.icon-btn{background:none;border:none;color:var(--dim);font-size:20px;
-  padding:4px 8px;min-width:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;}
-.icon-btn:active{color:var(--gold);}
-.full{width:100%;display:block;text-align:center;padding:13px 15px;}
+/* Claim row inside action card */
+.claim-inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.claim-sel{background:var(--card2);border:1px solid rgba(58,157,110,.4);color:var(--text);
+  font-size:13px;padding:7px 28px 7px 10px;border-radius:6px;outline:none;flex:1;min-width:100px;max-width:200px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23706858' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;-webkit-appearance:none;}
 
-/* ── Section label ── */
-.sec{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.18em;color:var(--dim);
-  text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
-.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Tiny action buttons */
+.ab{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.05em;
+  padding:6px 12px;border-radius:6px;min-height:34px;white-space:nowrap;border:1px solid;}
+.ab-claim{background:rgba(58,157,110,.14);border-color:rgba(58,157,110,.45);color:var(--claim);}
+.ab-claim:active{background:rgba(58,157,110,.28);}
+.ab-mats{background:rgba(212,130,42,.12);border-color:rgba(212,130,42,.4);color:var(--mats);}
+.ab-mats:active{background:rgba(212,130,42,.24);}
+.ab-mats-done{background:rgba(46,204,113,.1);border-color:rgba(46,204,113,.35);color:var(--ready);}
+.ab-unclaim{background:rgba(231,76,60,.08);border-color:rgba(231,76,60,.3);color:var(--danger);font-size:10px;}
+.ab-unclaim:active{background:rgba(231,76,60,.18);}
+.ab-avail{background:rgba(58,157,110,.1);border-color:rgba(58,157,110,.3);color:var(--claim);}
+.ab-avail:active{background:rgba(58,157,110,.22);}
+.ab-unavail{background:rgba(106,106,106,.1);border-color:rgba(106,106,106,.3);color:var(--dim);}
 
-/* ── Char card ── */
-.char-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:11px;}
-.char-card.mine{border-left:3px solid var(--gold);}
-.char-card.friend{border-left:3px solid var(--friend);}
-.char-hdr{display:flex;align-items:center;gap:7px;padding:10px 12px;background:var(--card2);flex-wrap:wrap;row-gap:5px;}
-.bdg{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;padding:3px 8px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
-.bdg-mine{background:rgba(200,168,75,.14);color:var(--gold);border:1px solid var(--gold-d);}
-.bdg-friend{background:rgba(93,138,168,.14);color:var(--friend);border:1px solid rgba(93,138,168,.38);}
-.spec-bdg{font-family:'Cinzel',serif;font-size:9px;padding:3px 8px;border-radius:4px;text-transform:uppercase;white-space:nowrap;border:1px solid;}
+/* Empty state */
+.empty-state{text-align:center;padding:30px 20px;color:var(--dim);font-size:14px;
+  border:1px dashed var(--border);border-radius:var(--r);}
+.empty-icon{font-size:32px;margin-bottom:8px;}
+
+/* ── Person tab page ── */
+.person-header{background:var(--card2);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.person-name{font-family:'Cinzel',serif;font-size:18px;color:var(--gold-l);flex:1;}
+.person-stats{display:flex;gap:8px;flex-wrap:wrap;}
+.pstat{font-size:12px;padding:4px 10px;border-radius:6px;white-space:nowrap;}
+.pstat.ready{background:rgba(46,204,113,.1);color:var(--ready);border:1px solid rgba(46,204,113,.25);}
+.pstat.cd{background:rgba(231,76,60,.08);color:var(--danger);border:1px solid rgba(231,76,60,.2);}
+.pstat.claim{background:rgba(58,157,110,.1);color:var(--claim);border:1px solid rgba(58,157,110,.25);}
+
+/* Character row in person tab */
+.char-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;margin-bottom:10px;}
+.char-row-hdr{display:flex;align-items:center;gap:8px;padding:10px 13px;
+  background:var(--card2);flex-wrap:wrap;row-gap:4px;}
+.char-row-name{font-family:'Cinzel',serif;font-size:13px;color:var(--gold-l);}
+.spec-pill{font-family:'Cinzel',serif;font-size:9px;padding:2px 7px;border-radius:4px;
+  text-transform:uppercase;white-space:nowrap;border:1px solid;}
 .sp-none{color:var(--dim);border-color:var(--border);}
 .sp-moon{color:var(--moon);border-color:rgba(126,200,227,.38);background:rgba(126,200,227,.07);}
 .sp-shad{color:var(--shad);border-color:rgba(155,89,182,.38);background:rgba(155,89,182,.07);}
 .sp-spell{color:var(--spell);border-color:rgba(231,76,60,.38);background:rgba(231,76,60,.07);}
-.cname{font-family:'Cinzel',serif;font-size:14px;color:var(--gold-l);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cowner{font-size:12px;color:var(--dim);white-space:nowrap;}
-.cstatus{font-size:11px;font-family:'Cinzel',serif;white-space:nowrap;}
-.s-ready{color:var(--ready);}.s-some{color:var(--warn);}.s-none{color:var(--cd);}
 
-/* ── Cloth grid ── */
-.cloth-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-@media(max-width:560px){.cloth-grid{grid-template-columns:1fr;}}
-.cc{background:var(--card);padding:12px 13px;display:flex;flex-direction:column;gap:5px;}
-.cc.off{opacity:.3;}
-.cl-row{display:flex;align-items:center;gap:6px;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+/* Cloth rows in character row */
+.cloth-rows-list{padding:4px 0;}
+.cloth-row-item{display:flex;align-items:center;gap:8px;padding:8px 13px;
+  border-top:1px solid var(--border);flex-wrap:wrap;row-gap:6px;}
+.cloth-row-item.off{opacity:.3;}
+.cr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .d-moon{background:var(--moon);}.d-shad{background:var(--shad);}.d-spell{background:var(--spell);}
-.cl-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;}
-.cl-name.moon{color:var(--moon);}.cl-name.shad{color:var(--shad);}.cl-name.spell{color:var(--spell);}
-.fbadges{display:flex;gap:4px;flex-wrap:wrap;}
-.fb{font-size:9px;padding:2px 6px;border-radius:3px;white-space:nowrap;font-family:'Cinzel',serif;}
-.fb-s{background:rgba(200,168,75,.11);color:var(--gold);border:1px solid var(--gold-d);}
-.fb-r{background:rgba(46,204,113,.09);color:var(--ready);border:1px solid rgba(46,204,113,.28);}
-.cl-yield{font-size:12px;color:var(--dim);}
-.cl-yield b{color:var(--gold-l);}
-.cl-yield .st{color:var(--gold);font-size:11px;}
-.cl-time{font-size:clamp(15px,4vw,17px);font-weight:700;}
-.t-ready{color:var(--ready);}.t-soon{color:var(--warn);}.t-wait{color:var(--cd);}
-.pbar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
-.pfill{height:100%;border-radius:2px;transition:width 1s linear;}
-.pf-moon{background:var(--moon);}.pf-shad{background:var(--shad);}.pf-spell{background:var(--spell);}
+.cr-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;min-width:74px;}
+.cr-name.moon{color:var(--moon);}.cr-name.shad{color:var(--shad);}.cr-name.spell{color:var(--spell);}
+.cr-time{font-family:'Cinzel',serif;font-size:13px;font-weight:700;min-width:70px;}
+.t-ready{color:var(--ready);}.t-soon{color:var(--warn);}.t-wait{color:var(--danger);}
+.t-upcoming{color:var(--upcoming);}
+.cr-bar{flex:1;min-width:60px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.cr-fill{height:100%;border-radius:2px;}
+.cr-fill.moon{background:var(--moon);}.cr-fill.shad{background:var(--shad);}.cr-fill.spell{background:var(--spell);}
+.cr-yield{font-size:11px;color:var(--dim);white-space:nowrap;}
+.cr-yield b{color:var(--gold-l);}
+.cr-actions{display:flex;gap:6px;flex-wrap:wrap;width:100%;}
 
-/* ── Sync bar ── */
-#sync-bar{font-size:12px;color:var(--dim);padding:6px 0;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.sdot.ok{background:var(--ready);}
-.sdot.err{background:var(--cd);}
-.sdot.spin{background:var(--warn);animation:pulse 1s infinite;}
+/* Claim status chips */
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:5px;font-size:11px;white-space:nowrap;}
+.chip-avail{background:rgba(58,157,110,.12);color:var(--claim);border:1px solid rgba(58,157,110,.3);}
+.chip-claimed{background:rgba(93,138,168,.12);color:var(--friend);border:1px solid rgba(93,138,168,.3);}
+.chip-mats{background:rgba(212,130,42,.1);color:var(--mats);border:1px solid rgba(212,130,42,.28);}
+.chip-mats-sent{background:rgba(46,204,113,.1);color:var(--ready);border:1px solid rgba(46,204,113,.28);}
+
+/* Summary bar */
+.sum-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.sum-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:8px 6px;text-align:center;position:relative;overflow:hidden;}
+.sum-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.sum-card.moon::after{background:var(--moon);}.sum-card.shad::after{background:var(--shad);}.sum-card.spell::after{background:var(--spell);}
+.sum-label{font-family:'Cinzel',serif;font-size:clamp(7px,1.8vw,9px);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+.sum-card.moon .sum-label{color:var(--moon);}.sum-card.shad .sum-label{color:var(--shad);}.sum-card.spell .sum-label{color:var(--spell);}
+.sum-n{font-family:'Cinzel',serif;font-size:clamp(18px,4.5vw,24px);font-weight:700;color:var(--ready);line-height:1;}
+.sum-small{font-size:10px;color:var(--dim);margin-top:1px;}
+
+/* Sync bar */
+#sync-bar{font-size:12px;color:var(--dim);padding:5px 12px;display:flex;align-items:center;gap:8px;
+  background:var(--panel);border-bottom:1px solid var(--border);}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sdot.ok{background:var(--ready);}.sdot.err{background:var(--danger);}.sdot.spin{background:var(--warn);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-@keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── Modal ── */
+/* Role banner */
+#role-banner{font-size:13px;padding:8px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);}
+
+/* Buttons */
+.btn{background:var(--card2);border:1px solid var(--border-g);color:var(--gold);
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;padding:10px 14px;border-radius:var(--r);min-height:42px;}
+.btn:active{background:rgba(200,168,75,.2);}
+.btn-p{background:rgba(200,168,75,.17);border:1px solid var(--gold);color:var(--gold-l);
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.08em;padding:10px 14px;border-radius:var(--r);min-height:42px;}
+.btn-p:active{background:rgba(200,168,75,.3);}
+.btn-green{background:rgba(46,204,113,.12);border:1px solid rgba(46,204,113,.4);color:var(--ready);
+  font-family:'Cinzel',serif;font-size:11px;padding:10px 14px;border-radius:var(--r);min-height:42px;}
+.btn-green:active{background:rgba(46,204,113,.24);}
+.btn-d{background:none;border:1px solid rgba(231,76,60,.4);color:var(--danger);
+  font-family:'Cinzel',serif;font-size:10px;padding:7px 12px;border-radius:8px;min-height:34px;}
+.btn-sm{padding:7px 12px;min-height:34px;}
+.full{width:100%;display:block;text-align:center;padding:12px 14px;}
+
+/* Modal */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);
-  z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+  z-index:300;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
 .overlay.open{display:flex;}
 @media(min-width:561px){.overlay{align-items:center;padding:16px;}}
 .mbox{background:var(--panel);border:1px solid var(--border-g);
@@ -182,42 +235,35 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
 .sinput{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);
   font-size:15px;padding:9px 10px;border-radius:6px;outline:none;}
 .sinput:focus{border-color:var(--border-g);}
-
-/* ── CD time-remaining inputs ── */
 .cd-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0 6px;}
 .cd-field label{display:block;font-size:11px;color:var(--dim);margin-bottom:4px;text-align:center;letter-spacing:.08em;text-transform:uppercase;}
 .cd-num{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);
   font-size:22px;font-weight:700;padding:10px 6px;border-radius:8px;outline:none;text-align:center;
   -moz-appearance:textfield;}
 .cd-num::-webkit-inner-spin-button,.cd-num::-webkit-outer-spin-button{-webkit-appearance:none;}
-.cd-num:focus{border-color:var(--border-g);}
 
-/* ── Setup screen ── */
-#setup-screen{padding:20px 16px 40px;}
+/* Setup */
+#setup-screen{padding:20px 16px 40px;max-width:600px;margin:0 auto;}
 .setup-card{background:var(--card);border:1px solid var(--border-g);border-radius:var(--r);padding:20px;margin-bottom:16px;}
 .setup-card h2{font-family:'Cinzel',serif;color:var(--gold-l);font-size:15px;margin-bottom:12px;letter-spacing:.08em;}
 .step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
 .step-n{font-family:'Cinzel',serif;color:var(--gold);font-size:14px;font-weight:700;min-width:22px;padding-top:1px;}
 .step-b{font-size:14px;line-height:1.65;flex:1;color:var(--text);}
-.step-b b{color:var(--gold-l);}
-.step-b a{color:var(--moon);text-decoration:underline;}
+.step-b b{color:var(--gold-l);}.step-b a{color:var(--moon);text-decoration:underline;}
 .code-block{background:var(--bg);border:1px solid var(--border);border-radius:6px;
   padding:10px 12px;font-family:monospace;font-size:11px;color:#a0c8a0;
   line-height:1.5;margin:8px 0;white-space:pre;overflow-x:auto;max-height:180px;overflow-y:auto;}
 .copy-code{font-size:12px;padding:5px 12px;border-radius:6px;
   background:rgba(160,200,160,.1);border:1px solid rgba(160,200,160,.3);color:#a0c8a0;cursor:pointer;}
 .hint{font-size:12px;color:var(--dim);margin-top:6px;line-height:1.5;}
-
-/* ── Share link blocks ── */
 .link-block{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;}
 .link-lbl{font-size:14px;margin-bottom:3px;font-weight:600;}
 .link-desc{font-size:12px;color:var(--dim);margin-bottom:8px;line-height:1.5;}
 .link-url{background:var(--bg);border:1px solid var(--border);border-radius:6px;
   padding:8px 10px;font-size:11px;color:var(--dim);font-family:monospace;
   word-break:break-all;margin-bottom:8px;line-height:1.4;user-select:all;-webkit-user-select:all;}
-.copy-btn{width:100%;padding:10px;border-radius:6px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.04em;cursor:pointer;}
+.copy-btn{width:100%;padding:10px;border-radius:6px;font-family:'Cinzel',serif;font-size:12px;cursor:pointer;}
 
-/* ── Toast ── */
 #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
   background:var(--card2);border:1px solid var(--border-g);color:var(--gold-l);
   padding:10px 20px;border-radius:10px;font-size:14px;z-index:500;
@@ -228,104 +274,123 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
 </head>
 <body>
 
-<!-- ═══════════ SETUP SCREEN ═══════════ -->
+<!-- ═══ SETUP SCREEN ═══ -->
 <div id="setup-screen" style="display:none">
   <header><h1>⚗ Cloth Tracker</h1><div class="sub">TBC Anniversary · First-Time Setup</div></header>
-  <div class="wrap">
+  <div style="padding:0 0 40px">
     <div class="setup-card">
-      <h2>⚙ One-Time Setup — About 5 Minutes</h2>
+      <h2>⚙ One-Time Setup</h2>
       <p style="font-size:14px;color:var(--dim);line-height:1.65;margin-bottom:18px;">
-        This tracker stores data in a Google Sheet so every device and every shared link always
-        shows the same live cooldowns. You only do this once.
+        Connects your tracker to Google Sheets so all devices always see the same live data.
       </p>
-
-      <div class="step">
-        <div class="step-n">1</div>
+      <div class="step"><div class="step-n">1</div>
         <div class="step-b">Go to <a href="https://sheets.google.com" target="_blank">sheets.google.com</a>
-          and create a new blank spreadsheet. Name it anything — e.g. <b>"Cloth Tracker"</b>.</div>
-      </div>
-
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="step-b">In the spreadsheet, click <b>Extensions → Apps Script</b>.
-          Delete all existing code in the editor, paste the code below, then click the
-          <b>Save</b> icon (💾).<br><br>
+        and create a new blank spreadsheet named <b>"Cloth Tracker"</b>.</div></div>
+      <div class="step"><div class="step-n">2</div>
+        <div class="step-b">Click <b>Extensions → Apps Script</b>. Delete all code, paste the code below, click <b>Save (💾)</b>.
           <div class="code-block" id="script-code-display"></div>
           <button class="copy-code" onclick="copyScript()">📋 Copy Script Code</button>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="step-b">Click <b>Deploy → New deployment</b>.
-          Set type to <b>Web app</b>. Set <b>Execute as: Me</b> and
-          <b>Who has access: Anyone</b>. Click <b>Deploy</b> and authorize when prompted.
-          (Click "Advanced → Go to [script name]" if you see a warning — it's safe, it's your own script.)</div>
-      </div>
-
-      <div class="step">
-        <div class="step-n">4</div>
-        <div class="step-b">Copy the <b>Web app URL</b> shown after deploying and paste it here:</div>
-      </div>
-
+        </div></div>
+      <div class="step"><div class="step-n">3</div>
+        <div class="step-b">Click <b>Deploy → New deployment</b> → type: <b>Web app</b> →
+          Execute as: <b>Me</b> → Who has access: <b>Anyone</b> → <b>Deploy</b> → authorize.</div></div>
+      <div class="step"><div class="step-n">4</div>
+        <div class="step-b">Copy the <b>Web app URL</b> and paste below. Also enter your name.</div></div>
+      <label class="mlabel" style="margin-top:0">Your Name (shown in the tracker)</label>
+      <input type="text" class="minput" id="setup-owner-name" placeholder="e.g. Brent" autocomplete="off" style="margin-bottom:10px">
+      <label class="mlabel" style="margin-top:0">Google Apps Script URL</label>
       <input type="url" class="minput" id="setup-url"
         placeholder="https://script.google.com/macros/s/…/exec"
-        autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
-        style="margin-bottom:8px">
-      <div class="hint">This gets saved in your browser and embedded in every share link automatically — your friends won't need to do any setup.</div>
+        autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" style="margin-bottom:8px">
+      <div class="hint">Your name and URL are saved in your browser and embedded in every share link — friends need no setup.</div>
       <br>
-      <button class="btn-p full" onclick="completeSetup()">Connect to Google Sheet →</button>
+      <button class="btn-p full" onclick="completeSetup()">Connect & Start →</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ MAIN APP ═══════════ -->
+<!-- ═══ MAIN APP ═══ -->
 <div id="app" style="display:none">
-  <header><h1>⚗ Cloth Tracker</h1><div class="sub">TBC Anniversary · Tailoring Specializations</div></header>
-  <div class="wrap">
 
-    <!-- Role banner -->
-    <div id="role-banner" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-      border-radius:8px;padding:10px 14px;margin-bottom:12px;">
-      <span id="role-icon" style="font-size:18px"></span>
-      <span id="role-text" style="flex:1;font-size:13px"></span>
-      <button class="btn-green" id="share-btn" onclick="openModal('share-modal')" style="display:none;padding:8px 14px;min-height:36px;font-size:11px;">🔗 Share</button>
-      <button class="btn" id="settings-btn" onclick="openModal('settings-modal')" style="display:none;padding:8px 12px;min-height:36px;font-size:10px;">⚙</button>
-    </div>
+  <header>
+    <h1>⚗ Cloth Tracker</h1>
+    <div class="sub">TBC Anniversary · Tailoring Specializations</div>
+    <div class="hdr-row" id="hdr-btns"></div>
+  </header>
 
-    <!-- Sync status -->
-    <div id="sync-bar">
-      <span class="sdot spin" id="sdot"></span>
-      <span id="sync-txt">Connecting…</span>
-      <button onclick="syncNow()" style="background:none;border:none;color:var(--dim);font-size:12px;margin-left:auto;text-decoration:underline;cursor:pointer;">↺ Refresh</button>
-    </div>
-
-    <!-- Summary -->
-    <div class="sum-grid">
-      <div class="sum-card moon"><div class="sum-name">Mooncloth</div>
-        <div class="sum-n" id="sum-moon-n">–</div>
-        <div class="sum-of" id="sum-moon-of"></div><div class="sum-pcs" id="sum-moon-pcs"></div></div>
-      <div class="sum-card shad"><div class="sum-name">Shadowcloth</div>
-        <div class="sum-n" id="sum-shad-n">–</div>
-        <div class="sum-of" id="sum-shad-of"></div><div class="sum-pcs" id="sum-shad-pcs"></div></div>
-      <div class="sum-card spell"><div class="sum-name">Spellcloth</div>
-        <div class="sum-n" id="sum-spell-n">–</div>
-        <div class="sum-of" id="sum-spell-of"></div><div class="sum-pcs" id="sum-spell-pcs"></div></div>
-    </div>
-
-    <div id="alerts"></div>
-
-    <div class="ctrl">
-      <input type="text" class="search" id="search" placeholder="Filter by name or owner…">
-      <button class="btn" id="add-btn" onclick="openAddModal()" style="display:none">+ Add Character</button>
-    </div>
-
-    <div class="sec">My Characters</div>
-    <div id="mine-grid"></div>
-    <div class="sec" style="margin-top:20px">Friends' Characters</div>
-    <div id="friends-grid"></div>
-
+  <div id="role-banner">
+    <span id="role-icon" style="font-size:16px"></span>
+    <span id="role-text" style="flex:1;font-size:13px"></span>
   </div>
+
+  <div id="sync-bar">
+    <span class="sdot spin" id="sdot"></span>
+    <span id="sync-txt">Connecting…</span>
+    <button onclick="syncNow()" style="background:none;border:none;color:var(--dim);font-size:12px;margin-left:auto;text-decoration:underline;cursor:pointer;">↺ Refresh</button>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs" id="nav-tabs"></div>
+
+  <!-- PAGE: Dashboard -->
+  <div class="page active" id="page-dashboard">
+    <div style="padding:14px 12px 20px;max-width:860px;margin:0 auto">
+      <!-- Summary bar -->
+      <div class="sum-bar">
+        <div class="sum-card moon"><div class="sum-label">Mooncloth</div>
+          <div class="sum-n" id="sum-moon-n">–</div><div class="sum-small" id="sum-moon-s"></div></div>
+        <div class="sum-card shad"><div class="sum-label">Shadowcloth</div>
+          <div class="sum-n" id="sum-shad-n">–</div><div class="sum-small" id="sum-shad-s"></div></div>
+        <div class="sum-card spell"><div class="sum-label">Spellcloth</div>
+          <div class="sum-n" id="sum-spell-n">–</div><div class="sum-small" id="sum-spell-s"></div></div>
+      </div>
+
+      <!-- Dashboard sections -->
+      <div class="dash-section" id="dash-ready-wrap">
+        <div class="dash-title" style="color:var(--ready)">
+          <span class="icon">✅</span> Ready Now
+          <span id="dash-ready-count" style="font-size:12px;color:var(--ready)"></span>
+        </div>
+        <div id="dash-ready"></div>
+      </div>
+
+      <div class="dash-section" id="dash-unclaimed-wrap">
+        <div class="dash-title" style="color:var(--claim)">
+          <span class="icon">🟢</span> Available to Claim
+          <span id="dash-unclaimed-count" style="font-size:12px;color:var(--claim)"></span>
+        </div>
+        <div id="dash-unclaimed"></div>
+      </div>
+
+      <div class="dash-section" id="dash-claimed-wrap">
+        <div class="dash-title" style="color:var(--friend)">
+          <span class="icon">📦</span> Claimed — Mats Needed
+          <span id="dash-claimed-count" style="font-size:12px;color:var(--friend)"></span>
+        </div>
+        <div id="dash-claimed"></div>
+      </div>
+
+      <div class="dash-section" id="dash-matsent-wrap">
+        <div class="dash-title" style="color:var(--mats)">
+          <span class="icon">✉️</span> Mats Sent — Awaiting Craft
+          <span id="dash-matsent-count" style="font-size:12px;color:var(--mats)"></span>
+        </div>
+        <div id="dash-matsent"></div>
+      </div>
+
+      <div class="dash-section" id="dash-upcoming-wrap">
+        <div class="dash-title" style="color:var(--upcoming)">
+          <span class="icon">⏳</span> Coming Up (within 24h)
+          <span id="dash-upcoming-count" style="font-size:12px;color:var(--upcoming)"></span>
+        </div>
+        <div id="dash-upcoming"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: Person tabs (generated dynamically) -->
+  <div id="person-pages"></div>
+
 </div>
 
 <div id="toast"></div>
@@ -335,31 +400,25 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
   <div class="mbox">
     <span class="drag"></span>
     <div class="mtitle" id="cd-title">Set Cooldown</div>
-
     <div class="tab-row">
       <button class="tab-btn active" id="cd-tab-rem" onclick="cdTab('rem')">⏱ Time Remaining</button>
       <button class="tab-btn" id="cd-tab-when" onclick="cdTab('when')">🕐 Craft Time</button>
     </div>
-
-    <!-- Time Remaining panel -->
     <div id="cd-panel-rem">
-      <div style="font-size:13px;color:var(--dim);margin-bottom:8px">Enter how much time is <em>still left</em> on the cooldown:</div>
+      <div style="font-size:13px;color:var(--dim);margin-bottom:8px">How much time is <em>still left</em>?</div>
       <div class="cd-fields">
         <div class="cd-field"><label>Days</label><input type="number" class="cd-num" id="cd-d" min="0" max="3" value="0"></div>
         <div class="cd-field"><label>Hours</label><input type="number" class="cd-num" id="cd-h" min="0" max="23" value="0"></div>
         <div class="cd-field"><label>Mins</label><input type="number" class="cd-num" id="cd-m" min="0" max="59" value="0"></div>
       </div>
-      <div style="font-size:11px;color:var(--dim);margin-bottom:14px;text-align:center">Max cooldown: 3d 20h · Leave all zeros to mark READY</div>
-      <button class="btn-p full" onclick="saveCDRemaining()">Save Time Remaining</button>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:14px;text-align:center">Max: 3d 20h · All zeros = mark READY</div>
+      <button class="btn-p full" onclick="saveCDRemaining()">Set Remaining Time</button>
     </div>
-
-    <!-- Craft Time panel -->
     <div id="cd-panel-when" style="display:none">
       <div style="font-size:13px;color:var(--dim);margin-bottom:8px">When did you craft the cloth?</div>
       <input type="datetime-local" class="minput" id="cd-dt" style="margin-bottom:14px">
       <button class="btn-p full" onclick="saveCDCraftTime()">Save Craft Time</button>
     </div>
-
     <hr class="dv">
     <button class="btn-green full" onclick="saveCDReady()">✓ Mark as READY right now</button>
     <div class="mactions"><button class="btn full" onclick="closeModal('cd-modal')">Cancel</button></div>
@@ -371,9 +430,9 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
   <div class="mbox">
     <span class="drag"></span>
     <div class="mtitle" id="char-modal-title">Add Character</div>
-    <div class="tab-row" id="type-tabs">
+    <div class="tab-row" id="char-type-tabs">
       <button class="tab-btn active" id="tab-mine" onclick="setCharTab('mine')">👤 My Character</button>
-      <button class="tab-btn" id="tab-friend" onclick="setCharTab('friend')">🤝 Friend's</button>
+      <button class="tab-btn" id="tab-friend" onclick="setCharTab('friend')">🤝 Friend's Character</button>
     </div>
     <input type="hidden" id="char-type" value="mine">
     <div class="two-col" style="margin-top:0">
@@ -382,7 +441,7 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
         <input type="text" class="minput" id="char-name" placeholder="e.g. Kaldoreth" autocomplete="off">
       </div>
       <div id="owner-col">
-        <label class="mlabel">Friend / Owner</label>
+        <label class="mlabel">Friend's Name</label>
         <input type="text" class="minput" id="char-owner" placeholder="e.g. Steve" autocomplete="off">
       </div>
     </div>
@@ -411,8 +470,7 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
     <span class="drag"></span>
     <div class="mtitle">🔗 Share Tracker</div>
     <p style="font-size:13px;color:var(--dim);margin-bottom:14px;line-height:1.6">
-      Send these links to your friends. The Google Sheet connection is already embedded —
-      they just click the link and it works, no setup needed.
+      Each link has your Google Sheet embedded — friends just click and it works, no setup needed.
     </p>
     <div id="share-links-content"></div>
     <div style="font-size:12px;color:var(--dim);padding:10px 12px;margin-bottom:14px;
@@ -423,18 +481,34 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
   </div>
 </div>
 
-<!-- ═══ SETTINGS MODAL ═══ -->
+<!-- ═══ RENAME MODAL ═══ -->
+<div class="overlay" id="rename-modal">
+  <div class="mbox">
+    <span class="drag"></span>
+    <div class="mtitle" id="rename-title">Rename</div>
+    <label class="mlabel" id="rename-label-char">Character Name</label>
+    <input type="text" class="minput" id="rename-char-name" placeholder="Character name" autocomplete="off">
+    <label class="mlabel" id="rename-label-owner">Player Name</label>
+    <input type="text" class="minput" id="rename-owner-name" placeholder="Player name" autocomplete="off">
+    <div style="font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5">
+      Renaming a player updates all their characters at once.
+    </div>
+    <div class="mactions">
+      <button class="btn" onclick="closeModal('rename-modal')">Cancel</button>
+      <button class="btn-p" onclick="saveRename()">Save</button>
+    </div>
+  </div>
+</div>
 <div class="overlay" id="settings-modal">
   <div class="mbox">
     <span class="drag"></span>
     <div class="mtitle">⚙ Settings</div>
+    <label class="mlabel">Your Display Name</label>
+    <input type="text" class="minput" id="settings-name" placeholder="e.g. Brent" autocomplete="off">
     <label class="mlabel">Google Apps Script URL</label>
     <input type="url" class="minput" id="settings-url"
       placeholder="https://script.google.com/macros/s/…/exec"
       autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-    <div style="font-size:12px;color:var(--dim);margin-top:6px;line-height:1.5">
-      Update this if you re-deploy your script or switch sheets.
-    </div>
     <div class="mactions">
       <button class="btn" onclick="closeModal('settings-modal')">Cancel</button>
       <button class="btn-p" onclick="saveSettings()">Save & Reconnect</button>
@@ -443,18 +517,19 @@ hr.dv{border:none;border-top:1px solid var(--border);margin:14px 0;}
 </div>
 
 <script>
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // CONSTANTS
-// ═══════════════════════════════════════════
-const CD_MS   = 92 * 3600 * 1000;  // 3 days 20 hours
-const WARN_MS =  4 * 3600 * 1000;
-const TYPES   = ["moon","shad","spell"];
-const TNAME   = {moon:"Mooncloth", shad:"Shadowcloth", spell:"Spellcloth"};
-const SNAME   = {none:"No Spec", moon:"Mooncloth Tailoring", shad:"Shadoweave Tailoring", spell:"Spellfire Tailoring"};
-const LS_URL  = "ctracker-url";
-const LS_KEYS = "ctracker-keys";
+// ═══════════════════════════════════════
+const CD_MS      = 92 * 3600 * 1000; // 3d 20h
+const WARN_MS    = 24 * 3600 * 1000; // 1 day heads up
+const URGENT_MS  =  4 * 3600 * 1000; // 4h = urgent
+const TYPES      = ["moon","shad","spell"];
+const TNAME      = {moon:"Mooncloth", shad:"Shadowcloth", spell:"Spellcloth"};
+const SNAME      = {none:"No Spec", moon:"Mooncloth", shad:"Shadoweave", spell:"Spellfire"};
+const LS_URL     = "ctracker-url";
+const LS_KEYS    = "ctracker-keys";
+const LS_OWNER   = "ctracker-owner";
 
-// Apps Script code shown in setup
 const SCRIPT_CODE =
 `function doGet(e)  { return handle(e); }
 function doPost(e) { return handle(e); }
@@ -470,43 +545,47 @@ function handle(e) {
   } else if (p.action === "write") {
     sheet.getRange("A1").setValue(p.payload);
     out = "ok";
-  } else {
-    out = "err:unknown";
-  }
+  } else { out = "err:unknown"; }
   return ContentService
     .createTextOutput(out)
     .setMimeType(ContentService.MimeType.TEXT);
 }`;
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // STATE
-// ═══════════════════════════════════════════
-let chars     = [];
-let scriptUrl = "";
-let role      = "owner";   // owner | friend | viewer
-let keys      = {owner:"", friend:""};
-let filterTx  = "";
-let cdTarget  = null;      // {charId, cloth}
-let editingId = null;
-let autoTimer = null;
+// ═══════════════════════════════════════
+let chars      = [];
+let scriptUrl  = "";
+let ownerName  = "Owner";
+let role       = "owner";
+let keys       = {owner:"", friend:""};
+let cdTarget   = null;
+let editingId  = null;
+let autoTimer  = null;
+let activeTab  = "dashboard";
 
-// ═══════════════════════════════════════════
-// PURE HELPERS
-// ═══════════════════════════════════════════
-const uid     = () => Math.random().toString(36).slice(2,10);
-const yld     = (c,t) => c.spec===t ? 2 : 1;
-const tLeft   = lc => { if(!lc) return 0; const r=CD_MS-(Date.now()-lc); return r>0?r:0; };
-const fmtT    = ms => {
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+const uid    = () => Math.random().toString(36).slice(2,10);
+const yld    = (c,t) => c.spec===t ? 2 : 1;
+const tLeft  = lc => { if(!lc) return 0; const r=CD_MS-(Date.now()-lc); return r>0?r:0; };
+const fmtT   = ms => {
   if(ms<=0) return "READY";
   const h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000);
-  return h>=24 ? `${Math.floor(h/24)}d ${h%24}h` : `${h}h ${m}m`;
+  return h>=24?`${Math.floor(h/24)}d ${h%24}h`:`${h}h ${m}m`;
 };
-const tSt     = ms => ms<=0?"ready":ms<WARN_MS?"soon":"waiting";
-const pct     = lc => !lc?100:Math.min(100,((Date.now()-lc)/CD_MS)*100);
-const esc     = s  => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-const canEdit = () => role==="owner";
-const canCD   = ct => role==="owner"||(role==="friend"&&ct==="friend");
+const tSt    = ms => ms<=0?"ready":ms<=URGENT_MS?"soon":ms<=WARN_MS?"upcoming":"waiting";
+const pct    = lc => !lc?100:Math.min(100,((Date.now()-lc)/CD_MS)*100);
+const esc    = s  => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const canEdit        = () => role==="owner";
+const canSetCD       = () => role==="owner"||role==="friend";
+const canToggleAvail = () => role==="owner"||role==="friend";
+const canClaim       = () => role==="owner"||role==="friend";
 
+function ownerNames() {
+  const s=new Set(); chars.forEach(c=>s.add(c.owner)); return [...s].sort();
+}
 function nowLocal() {
   const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
   return d.toISOString().slice(0,16);
@@ -516,290 +595,267 @@ function toast(msg) {
   el.textContent=msg; el.classList.add("show");
   setTimeout(()=>el.classList.remove("show"),2500);
 }
-function setSyncUI(state, txt) {
+function setSyncUI(state,txt) {
   document.getElementById("sdot").className="sdot "+state;
   document.getElementById("sync-txt").textContent=txt;
 }
 
-// ═══════════════════════════════════════════
-// URL HELPERS
-// Keys and script URL travel in the URL hash
-// so they never hit the server (privacy) and
-// don't break with encoding issues.
-// Format: #s=SECRET&u=BASE64_SCRIPT_URL
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
+// URL / HASH
+// ═══════════════════════════════════════
 function readHash() {
-  const p = new URLSearchParams(window.location.hash.replace(/^#/,""));
-  return {
-    secret:    p.get("s") || "",
-    scriptB64: p.get("u") || "",
-    role:      p.get("r") || ""
-  };
+  const p=new URLSearchParams(window.location.hash.replace(/^#/,""));
+  return {secret:p.get("s")||"",scriptB64:p.get("u")||""};
+}
+function buildShareLink(r,secret) {
+  const base=window.location.href.split("#")[0];
+  const u=btoa(unescape(encodeURIComponent(scriptUrl)));
+  const n=btoa(unescape(encodeURIComponent(ownerName)));
+  return `${base}#r=${encodeURIComponent(r)}&s=${encodeURIComponent(secret)}&u=${u}&n=${n}`;
 }
 
-function buildShareLink(r, secret) {
-  // Base = everything before the hash
-  const base = window.location.href.split("#")[0];
-  // Encode script URL as base64 so special chars cause zero issues
-  const u = btoa(unescape(encodeURIComponent(scriptUrl)));
-  return `${base}#r=${encodeURIComponent(r)}&s=${encodeURIComponent(secret)}&u=${u}`;
-}
-
-// ═══════════════════════════════════════════
-// GOOGLE SHEET I/O
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
+// SHEET I/O
+// ═══════════════════════════════════════
 async function sheetRead() {
-  const res = await fetch(`${scriptUrl}?action=read&_=${Date.now()}`);
+  const res=await fetch(`${scriptUrl}?action=read&_=${Date.now()}`);
   if(!res.ok) throw new Error(res.status);
-  const txt = await res.text();
-  if(!txt || txt==="{}" || txt==="") return null;
+  const txt=await res.text();
+  if(!txt||txt==="{}"||txt==="") return null;
   return JSON.parse(txt);
 }
-
 async function sheetWrite(data) {
-  const payload = JSON.stringify(data);
-  // Send as a GET with payload in query string (Apps Script handles both)
-  const res = await fetch(`${scriptUrl}?action=write&payload=${encodeURIComponent(payload)}`);
+  const payload=JSON.stringify(data);
+  const res=await fetch(`${scriptUrl}?action=write&payload=${encodeURIComponent(payload)}`);
   if(!res.ok) throw new Error(res.status);
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // SYNC
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 async function syncNow(silent=false) {
   if(!scriptUrl) return;
   if(!silent) setSyncUI("spin","Syncing…");
   try {
-    const remote = await sheetRead();
-    if(remote && remote.chars) {
-      chars = remote.chars;
-      migrate(chars);
-      // Reconcile keys — sheet's keys are authoritative
-      if(remote.keys && remote.keys.owner) {
-        keys = remote.keys;
-        localStorage.setItem(LS_KEYS, JSON.stringify(keys));
-        // Re-evaluate role now that we have real keys
-        applyRole(readHash().secret);
-        updateRoleUI();
+    const remote=await sheetRead();
+    if(remote&&remote.chars) {
+      chars=remote.chars; migrate(chars);
+      if(remote.keys&&remote.keys.owner) {
+        keys=remote.keys; localStorage.setItem(LS_KEYS,JSON.stringify(keys));
+        applyRole(readHash().secret); updateRoleUI();
+      }
+      if(remote.ownerName) {
+        ownerName=remote.ownerName;
+        localStorage.setItem(LS_OWNER,ownerName);
       }
     } else if(!chars.length) {
-      chars = defaultChars();
-      await sheetWrite({chars, keys});
+      chars=defaultChars(); await sheetWrite({chars,keys,ownerName});
     }
     setSyncUI("ok","Synced · "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}));
     render();
   } catch(e) {
-    setSyncUI("err","Sync failed — check Settings");
-    if(!silent) toast("⚠ Couldn't reach Google Sheet. Tap ⚙ to check the URL.");
+    setSyncUI("err","Sync failed"); if(!silent) toast("⚠ Can't reach Google Sheet. Tap ⚙.");
   }
 }
-
 async function save() {
   setSyncUI("spin","Saving…");
-  try {
-    await sheetWrite({chars, keys});
-    setSyncUI("ok","Saved · "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}));
-  } catch(e) {
-    setSyncUI("err","Save failed");
-    toast("⚠ Couldn't save to Google Sheet.");
-  }
+  try { await sheetWrite({chars,keys,ownerName}); setSyncUI("ok","Saved · "+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})); }
+  catch(e) { setSyncUI("err","Save failed"); toast("⚠ Couldn't save."); }
 }
-
 function startAutoSync() {
   if(autoTimer) clearInterval(autoTimer);
-  autoTimer = setInterval(()=>syncNow(true), 30000);
+  autoTimer=setInterval(()=>syncNow(true),30000);
 }
-
 function migrate(arr) {
   arr.forEach(c=>{
     if(!c.spec) c.spec="none";
+    if(c.type==="mine") c.owner=ownerName;
     TYPES.forEach(t=>{
       if(!c.cloths[t]) c.cloths[t]={tracked:false,sendTo:"",recvFrom:"",lastCraft:null};
       if(c.cloths[t].recvFrom===undefined) c.cloths[t].recvFrom="";
+      if(c.cloths[t].available===undefined) c.cloths[t].available=false;
+      if(c.cloths[t].claimedBy===undefined) c.cloths[t].claimedBy="";
+      if(c.cloths[t].matsSent===undefined) c.cloths[t].matsSent=false;
     });
   });
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // DEFAULT DATA
-// ═══════════════════════════════════════════
-function defaultChars() { return [
-  {id:"me1",  name:"My Main",       type:"mine",   owner:"Me",      spec:"none", cloths:{
-    moon:{tracked:true,  sendTo:"Friend2",recvFrom:"",  lastCraft:null},
-    shad:{tracked:true,  sendTo:"",       recvFrom:"",  lastCraft:null},
-    spell:{tracked:true, sendTo:"Friend1",recvFrom:"",  lastCraft:null}}},
-  {id:"f1c1", name:"Friend1-Char1", type:"friend", owner:"Friend1", spec:"none", cloths:{
-    moon:{tracked:false,sendTo:"",  recvFrom:"",  lastCraft:null},
-    shad:{tracked:true, sendTo:"Me",recvFrom:"",  lastCraft:null},
-    spell:{tracked:true,sendTo:"Me",recvFrom:"Me",lastCraft:null}}},
-  {id:"f1c2", name:"Friend1-Char2", type:"friend", owner:"Friend1", spec:"none", cloths:{
-    moon:{tracked:false,sendTo:"",  recvFrom:"",lastCraft:null},
-    shad:{tracked:true, sendTo:"Me",recvFrom:"",lastCraft:null},
-    spell:{tracked:true,sendTo:"Me",recvFrom:"",lastCraft:null}}},
-  {id:"f2c1", name:"Friend2-Char1", type:"friend", owner:"Friend2", spec:"none", cloths:{
-    moon:{tracked:false,sendTo:"",  recvFrom:"",  lastCraft:null},
-    shad:{tracked:true, sendTo:"Me",recvFrom:"",  lastCraft:null},
-    spell:{tracked:false,sendTo:"", recvFrom:"",  lastCraft:null}}},
-  {id:"f3c1", name:"Friend3-Char1", type:"friend", owner:"Friend3", spec:"none", cloths:{
-    moon:{tracked:false,sendTo:"",  recvFrom:"",lastCraft:null},
-    shad:{tracked:true, sendTo:"Me",recvFrom:"",lastCraft:null},
-    spell:{tracked:false,sendTo:"", recvFrom:"",lastCraft:null}}},
+// ═══════════════════════════════════════
+function mk(tracked,sendTo,recvFrom){
+  return {tracked,sendTo,recvFrom,lastCraft:null,available:false,claimedBy:"",matsSent:false};
+}
+function defaultChars(){return[
+  {id:"me1", name:"My Main",       type:"mine",   owner:ownerName, spec:"none",cloths:{moon:mk(true,"Friend2",""),shad:mk(true,"",""),spell:mk(true,"Friend1","")}},
+  {id:"f1c1",name:"Friend1-Char1", type:"friend", owner:"Friend1", spec:"none",cloths:{moon:mk(false,"",""),shad:mk(true,ownerName,""),spell:mk(true,ownerName,ownerName)}},
+  {id:"f1c2",name:"Friend1-Char2", type:"friend", owner:"Friend1", spec:"none",cloths:{moon:mk(false,"",""),shad:mk(true,ownerName,""),spell:mk(true,ownerName,"")}},
+  {id:"f2c1",name:"Friend2-Char1", type:"friend", owner:"Friend2", spec:"none",cloths:{moon:mk(false,"",""),shad:mk(true,ownerName,""),spell:mk(false,"","")}},
+  {id:"f3c1",name:"Friend3-Char1", type:"friend", owner:"Friend3", spec:"none",cloths:{moon:mk(false,"",""),shad:mk(true,ownerName,""),spell:mk(false,"","")}},
 ];}
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // BOOT
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 function applyRole(secret) {
-  if(!secret)               role="owner";
-  else if(secret===keys.owner)  role="owner";
-  else if(secret===keys.friend) role="friend";
-  else                      role="viewer";
+  if(!secret||secret===keys.owner) role="owner";
+  else if(secret===keys.friend)    role="friend";
+  else                             role="viewer";
 }
-
 function updateRoleUI() {
-  const banner = document.getElementById("role-banner");
-  const rc={owner:"rgba(200,168,75,.08)",friend:"rgba(93,138,168,.08)",viewer:"rgba(155,89,182,.08)"};
-  const bc={owner:"rgba(200,168,75,.25)",friend:"rgba(93,138,168,.25)",viewer:"rgba(155,89,182,.25)"};
+  const banner=document.getElementById("role-banner");
+  const rc={owner:"rgba(200,168,75,.07)",friend:"rgba(93,138,168,.07)",viewer:"rgba(155,89,182,.07)"};
   const tc={owner:"#c8a84b",friend:"#5d8aa8",viewer:"#9b59b6"};
-  banner.style.cssText=`display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    border-radius:8px;padding:10px 14px;margin-bottom:12px;
-    background:${rc[role]};border:1px solid ${bc[role]};color:${tc[role]};`;
-  document.getElementById("role-icon").textContent={owner:"👑",friend:"🤝",viewer:"👁"}[role];
+  banner.style.cssText=`font-size:13px;padding:8px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:${rc[role]};color:${tc[role]};`;
+  document.getElementById("role-icon").textContent={owner:"⚗",friend:"🤝",viewer:"👁"}[role];
   document.getElementById("role-text").textContent={
-    owner:"Owner — full edit access",
-    friend:"Friend — can reset cooldowns on friend characters",
-    viewer:"Guest — read only"
+    owner:`${ownerName} · Full access`,
+    friend:"Friend access — claim cloth, mark mats, set cooldowns",
+    viewer:"View only"
   }[role];
-  const isOwner = role==="owner";
-  document.getElementById("share-btn").style.display = isOwner?"":"none";
-  document.getElementById("settings-btn").style.display = isOwner?"":"none";
-  document.getElementById("add-btn").style.display = isOwner?"":"none";
+  // Header buttons
+  const hdr=document.getElementById("hdr-btns"); hdr.innerHTML="";
+  if(role==="owner"){
+    hdr.innerHTML=`
+      <button class="btn-green" onclick="openModal('share-modal')" style="padding:7px 13px;min-height:34px;font-size:10px;font-family:'Cinzel',serif;letter-spacing:.06em;">🔗 Share</button>
+      <button class="btn" onclick="openAddModal()" style="padding:7px 13px;min-height:34px;font-size:10px;">+ Add Char</button>
+      <button class="btn" onclick="openModal('settings-modal')" style="padding:7px 12px;min-height:34px;font-size:12px;">⚙</button>`;
+  }
 }
 
 function boot() {
-  document.getElementById("script-code-display").textContent = SCRIPT_CODE;
+  document.getElementById("script-code-display").textContent=SCRIPT_CODE;
+  const hash=readHash();
+  let fromHash="";
+  if(hash.scriptB64){try{fromHash=decodeURIComponent(escape(atob(hash.scriptB64)));}catch{}}
 
-  const hash = readHash();
+  // Owner name from hash (shared links carry it)
+  const hashParams=new URLSearchParams(window.location.hash.replace(/^#/,""));
+  const nameB64=hashParams.get("n")||"";
+  if(nameB64){try{ownerName=decodeURIComponent(escape(atob(nameB64)));}catch{}}
+  else ownerName=localStorage.getItem(LS_OWNER)||"Owner";
 
-  // Resolve script URL: hash param → localStorage
-  let fromHash = "";
-  if(hash.scriptB64) {
-    try { fromHash = decodeURIComponent(escape(atob(hash.scriptB64))); } catch{}
-  }
-  scriptUrl = fromHash || localStorage.getItem(LS_URL) || "";
-  if(fromHash) localStorage.setItem(LS_URL, fromHash); // persist for next visit
+  scriptUrl=fromHash||localStorage.getItem(LS_URL)||"";
+  if(fromHash) localStorage.setItem(LS_URL,fromHash);
+  if(!scriptUrl){document.getElementById("setup-screen").style.display="";return;}
 
-  if(!scriptUrl) {
-    document.getElementById("setup-screen").style.display="";
-    return;
-  }
-
-  // Resolve keys: localStorage first, generate if missing
-  try { keys = JSON.parse(localStorage.getItem(LS_KEYS)||"{}"); } catch{}
-  if(!keys.owner)  keys.owner  = uid()+uid();
-  if(!keys.friend) keys.friend = uid()+uid();
-  localStorage.setItem(LS_KEYS, JSON.stringify(keys));
-
-  // Initial role from hash secret (will be refined after sheet loads real keys)
+  try{keys=JSON.parse(localStorage.getItem(LS_KEYS)||"{}");}catch{}
+  if(!keys.owner) keys.owner=uid()+uid();
+  if(!keys.friend) keys.friend=uid()+uid();
+  localStorage.setItem(LS_KEYS,JSON.stringify(keys));
   applyRole(hash.secret);
 
   document.getElementById("setup-screen").style.display="none";
   document.getElementById("app").style.display="";
   document.getElementById("settings-url").value=scriptUrl;
+  document.getElementById("settings-name").value=ownerName;
   updateRoleUI();
 
-  // Wire up search + modal backdrop close
-  document.getElementById("search").addEventListener("input",e=>{filterTx=e.target.value;render();});
   document.querySelectorAll(".overlay").forEach(el=>{
-    el.addEventListener("click",e=>{ if(e.target===el) el.classList.remove("open"); });
+    el.addEventListener("click",e=>{if(e.target===el)el.classList.remove("open");});
   });
-
-  syncNow();
-  startAutoSync();
+  syncNow(); startAutoSync();
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // SETUP
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 function completeSetup() {
-  const val = document.getElementById("setup-url").value.trim();
-  if(!val.startsWith("https://script.google.com")) {
-    alert("Please paste the Web App URL from Google Apps Script.\nIt should start with: https://script.google.com");
-    return;
+  const name=document.getElementById("setup-owner-name").value.trim();
+  const url=document.getElementById("setup-url").value.trim();
+  if(!name){alert("Please enter your name.");return;}
+  if(!url.startsWith("https://script.google.com")){
+    alert("Please paste the Web App URL from Apps Script.\nStarts with: https://script.google.com"); return;
   }
-  localStorage.setItem(LS_URL, val);
-  scriptUrl = val;
+  ownerName=name; localStorage.setItem(LS_OWNER,name);
+  scriptUrl=url;  localStorage.setItem(LS_URL,url);
   boot();
 }
 function saveSettings() {
-  const val = document.getElementById("settings-url").value.trim();
-  if(!val.startsWith("https://")) { alert("Enter a valid URL."); return; }
-  localStorage.setItem(LS_URL, val);
-  scriptUrl = val;
-  closeModal("settings-modal");
-  syncNow();
-  startAutoSync();
-  toast("Reconnecting…");
+  const name=document.getElementById("settings-name").value.trim();
+  const url=document.getElementById("settings-url").value.trim();
+  if(!name){alert("Enter your name.");return;}
+  if(!url.startsWith("https://")){alert("Enter a valid URL.");return;}
+  ownerName=name; localStorage.setItem(LS_OWNER,name);
+  scriptUrl=url;  localStorage.setItem(LS_URL,url);
+  closeModal("settings-modal"); syncNow(); startAutoSync(); toast("Settings saved.");
 }
-function copyScript() {
-  navigator.clipboard.writeText(SCRIPT_CODE)
-    .then(()=>toast("Script code copied!"))
-    .catch(()=>prompt("Copy this script code:",SCRIPT_CODE));
+function copyScript(){
+  navigator.clipboard.writeText(SCRIPT_CODE).then(()=>toast("Script copied!")).catch(()=>prompt("Copy:",SCRIPT_CODE));
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
+// NAV TABS
+// ═══════════════════════════════════════
+function buildTabs() {
+  const people=[ownerName,...new Set(chars.filter(c=>c.type==="friend").map(c=>c.owner))];
+  const nav=document.getElementById("nav-tabs");
+  const pages=document.getElementById("person-pages");
+
+  // Count badges per person for dashboard
+  const badges=tabBadges();
+
+  let tabsHTML=`<button class="nav-tab ${activeTab==="dashboard"?"active":""}" onclick="switchTab('dashboard')">📊 Dashboard`;
+  const totalUrgent=Object.values(badges).reduce((s,b)=>s+(b.urgent||0),0);
+  if(totalUrgent>0) tabsHTML+=`<span class="tab-badge red">${totalUrgent}</span>`;
+  tabsHTML+=`</button>`;
+
+  people.forEach(person=>{
+    const pid="person-"+person.replace(/\s+/g,"_");
+    const b=badges[person]||{};
+    let badgeHTML="";
+    if(b.urgent>0) badgeHTML+=`<span class="tab-badge red">${b.urgent}</span>`;
+    else if(b.warn>0) badgeHTML+=`<span class="tab-badge orange">${b.warn}</span>`;
+    else if(b.claim>0) badgeHTML+=`<span class="tab-badge green">${b.claim}</span>`;
+    tabsHTML+=`<button class="nav-tab ${activeTab===pid?"active":""}" onclick="switchTab('${pid}')">${esc(person)}${badgeHTML}</button>`;
+  });
+  nav.innerHTML=tabsHTML;
+
+  // Build person pages
+  pages.innerHTML=people.map(person=>{
+    const pid="person-"+person.replace(/\s+/g,"_");
+    return `<div class="page ${activeTab===pid?"active":""}" id="page-${pid}">
+      ${renderPersonPage(person)}
+    </div>`;
+  }).join("");
+}
+
+function tabBadges() {
+  const b={};
+  chars.forEach(c=>{
+    const pOwner=c.owner;
+    if(!b[pOwner]) b[pOwner]={urgent:0,warn:0,claim:0};
+    TYPES.forEach(t=>{
+      const cl=c.cloths[t]; if(!cl.tracked) return;
+      const ms=tLeft(cl.lastCraft);
+      if(ms===0&&cl.available&&!cl.claimedBy) b[pOwner].claim++;
+      if(ms===0&&cl.claimedBy&&!cl.matsSent) b[pOwner].urgent++;
+      if(ms>0&&ms<=WARN_MS&&cl.claimedBy&&!cl.matsSent) b[pOwner].warn++;
+    });
+  });
+  return b;
+}
+
+function switchTab(id) {
+  activeTab=id;
+  document.querySelectorAll(".nav-tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  // Find the tab button by its onclick attribute
+  const tabEl=document.querySelector(`.nav-tab[onclick="switchTab('${id}')"]`);
+  if(tabEl) tabEl.classList.add("active");
+  // Page IDs match exactly what buildTabs creates: "page-dashboard" or "page-person-NAME"
+  const pageId=id==="dashboard"?"page-dashboard":`page-${id}`;
+  const pageEl=document.getElementById(pageId);
+  if(pageEl) pageEl.classList.add("active");
+}
+
+// ═══════════════════════════════════════
 // RENDER
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 function render() {
-  const f=filterTx.toLowerCase();
-  const vis=t=>chars.filter(c=>c.type===t&&(!f||c.name.toLowerCase().includes(f)||c.owner.toLowerCase().includes(f)));
-  const empty=`<div style="color:var(--dim);font-size:14px;padding:10px 4px">No characters.</div>`;
-  document.getElementById("mine-grid").innerHTML    = vis("mine").length    ? vis("mine").map(renderChar).join("")    : empty;
-  document.getElementById("friends-grid").innerHTML = vis("friend").length  ? vis("friend").map(renderChar).join("") : empty;
-  renderSummary(); renderAlerts();
-}
-
-function renderChar(c) {
-  const tracked=TYPES.filter(t=>c.cloths[t].tracked);
-  const rN=tracked.filter(t=>tLeft(c.cloths[t].lastCraft)===0).length;
-  const sc=!tracked.length?"s-none":rN===tracked.length?"s-ready":rN>0?"s-some":"s-none";
-  const st=!tracked.length?"—":rN===tracked.length?"All Ready":`${rN}/${tracked.length} Ready`;
-  const spCls={none:"sp-none",moon:"sp-moon",shad:"sp-shad",spell:"sp-spell"}[c.spec];
-  const spTxt=c.spec!=="none"?`★ ${SNAME[c.spec]}`:"No Spec";
-  const btns=canEdit()?`
-    <button class="icon-btn" onclick="openEditModal('${c.id}')">✎</button>
-    <button class="btn-d" onclick="removeChar('${c.id}')">✕</button>`:"";
-  return `<div class="char-card ${c.type}">
-    <div class="char-hdr">
-      <span class="bdg bdg-${c.type}">${c.type==="mine"?"Mine":"Friend"}</span>
-      <span class="spec-bdg ${spCls}">${esc(spTxt)}</span>
-      <span class="cname">${esc(c.name)}</span>
-      ${c.type==="friend"?`<span class="cowner">${esc(c.owner)}</span>`:""}
-      <span class="cstatus ${sc}">${st}</span>
-      ${btns}
-    </div>
-    <div class="cloth-grid">${TYPES.map(t=>renderCell(c,t)).join("")}</div>
-  </div>`;
-}
-
-function renderCell(c,t) {
-  const cl=c.cloths[t], isSpec=c.spec===t, qty=yld(c,t);
-  if(!cl.tracked) return `<div class="cc off">
-    <div class="cl-row"><span class="dot d-${t}"></span><span class="cl-name ${t}">${TNAME[t]}</span></div>
-    <div style="font-size:12px;color:var(--dim)">Not tracked</div></div>`;
-  const ms=tLeft(cl.lastCraft), st=tSt(ms), p=pct(cl.lastCraft);
-  const sB=cl.sendTo?`<span class="fb fb-s">→ ${esc(cl.sendTo)}</span>`:"";
-  const rB=cl.recvFrom?`<span class="fb fb-r">← ${esc(cl.recvFrom)}</span>`:"";
-  const btn=canCD(c.type)?`<button class="btn-g" onclick="openCDModal('${c.id}','${t}')" style="margin-top:2px">Set CD</button>`:"";
-  return `<div class="cc">
-    <div class="cl-row"><span class="dot d-${t}"></span>
-      <span class="cl-name ${t}">${TNAME[t]}${isSpec?" ★":""}</span></div>
-    ${(sB||rB)?`<div class="fbadges">${sB}${rB}</div>`:""}
-    <div class="cl-yield">Yields <b>${qty}×</b>${isSpec?` <span class="st">(★ spec)</span>`:""}</div>
-    <div class="cl-time t-${st}">${fmtT(ms)}</div>
-    <div class="pbar"><div class="pfill pf-${t}" style="width:${p}%"></div></div>
-    ${btn}
-  </div>`;
+  renderSummary();
+  renderDashboard();
+  buildTabs();
 }
 
 function renderSummary() {
@@ -809,93 +865,316 @@ function renderSummary() {
     const tot=tracked.reduce((s,c)=>s+yld(c,t),0);
     const rdy=ready.reduce((s,c)=>s+yld(c,t),0);
     document.getElementById(`sum-${t}-n`).textContent=ready.length;
-    document.getElementById(`sum-${t}-of`).textContent=`of ${tracked.length} ready`;
-    document.getElementById(`sum-${t}-pcs`).textContent=`${rdy}/${tot} pieces`;
+    document.getElementById(`sum-${t}-s`).textContent=`${rdy}/${tot} pieces`;
   });
 }
 
-function renderAlerts() {
-  const out=[];
+// ─ Dashboard ─
+function renderDashboard() {
+  const ready=[], unclaimed=[], claimed=[], matsent=[], upcoming=[];
+
   chars.forEach(c=>TYPES.forEach(t=>{
     const cl=c.cloths[t]; if(!cl.tracked) return;
-    const ms=tLeft(cl.lastCraft), qty=yld(c,t);
-    const who=c.type==="friend"?`${c.name} (${c.owner})`:c.name;
-    if(ms===0){
-      if(c.type==="friend"&&cl.recvFrom) out.push({cls:"urgent",icon:"📦",txt:`Send mats → ${who}: ${qty}× ${TNAME[t]} READY`});
-      else if(c.type==="friend"&&cl.sendTo) out.push({cls:"urgent",icon:"✅",txt:`${who}: ${qty}× ${TNAME[t]} READY → ${cl.sendTo}`});
-      else if(c.type==="mine"&&cl.sendTo) out.push({cls:"urgent",icon:"✅",txt:`Craft ${qty}× ${TNAME[t]} on ${who} → send to ${cl.sendTo}`});
-    } else if(ms<WARN_MS&&c.type==="friend"&&cl.recvFrom){
-      out.push({cls:"warn",icon:"⚠️",txt:`Prep mats for ${who}: ${qty}× ${TNAME[t]} ready in ${fmtT(ms)}`});
+    const ms=tLeft(cl.lastCraft), qty=yld(c,t), isSpec=c.spec===t;
+
+    // Claim state always takes priority over cooldown state
+    if(cl.matsSent) {
+      matsent.push({c,t,cl,ms,qty,isSpec});
+    } else if(cl.claimedBy) {
+      claimed.push({c,t,cl,ms,qty,isSpec});
+    } else if(cl.available) {
+      unclaimed.push({c,t,cl,ms,qty,isSpec});
+    } else if(ms===0) {
+      ready.push({c,t,cl,ms,qty,isSpec});
+    } else if(ms<=WARN_MS) {
+      upcoming.push({c,t,cl,ms,qty,isSpec});
     }
   }));
-  document.getElementById("alerts").innerHTML=out.map(a=>
-    `<div class="alert ${a.cls}"><span style="font-size:15px;flex-shrink:0;margin-top:1px">${a.icon}</span><span>${esc(a.txt)}</span></div>`
-  ).join("");
+
+  const fill=(arr,elId,countId,fn,emptyMsg)=>{
+    document.getElementById(elId).innerHTML=arr.length?arr.map(fn).join(""):
+      `<div class="empty-state"><div class="empty-icon">✨</div>${emptyMsg}</div>`;
+    document.getElementById(countId).textContent=arr.length?`(${arr.length})`:"";
+  };
+
+  fill(ready,    "dash-ready",    "dash-ready-count",    renderDashCard_ready,    "No cloth ready yet — check back soon");
+  fill(unclaimed,"dash-unclaimed","dash-unclaimed-count", renderDashCard_unclaimed,"Nothing available to claim right now");
+  fill(claimed,  "dash-claimed",  "dash-claimed-count",  renderDashCard_claimed,  "All claimed cloth has mats sorted ✓");
+  fill(matsent,  "dash-matsent",  "dash-matsent-count",  renderDashCard_matsent,  "No mats in transit yet");
+  fill(upcoming, "dash-upcoming", "dash-upcoming-count", renderDashCard_upcoming, "Nothing due in the next 24h");
 }
 
-// ═══════════════════════════════════════════
+function clothLine(c,t,qty,isSpec) {
+  return `<b>${TNAME[t]}</b>${isSpec?" ★":""} (${qty}×) — <b>${esc(c.name)}</b> <span style="color:var(--dim);font-size:12px">(${esc(c.owner)})</span>`;
+}
+function renderDashCard_ready({c,t,cl,ms,qty,isSpec}) {
+  const avBtn=canToggleAvail()?`<button class="ab ab-avail" onclick="toggleAvail('${c.id}','${t}')">🟢 Mark Available</button>`:"";
+  const cdBtn=canSetCD()?`<button class="ab ab-mats" onclick="openCDModal('${c.id}','${t}')">Set CD</button>`:"";
+  return `<div class="action-card urgent">
+    <div class="ac-top">
+      <span class="ac-icon">✅</span>
+      <div class="ac-body"><div class="ac-title">${clothLine(c,t,qty,isSpec)}</div>
+        <div class="ac-sub">Cloth is READY — mark available so someone can claim it</div></div>
+      <div class="ac-time ready">READY</div>
+    </div>
+    <div class="ac-actions">${avBtn}${cdBtn}</div>
+  </div>`;
+}
+function renderDashCard_unclaimed({c,t,cl,ms,qty,isSpec}) {
+  const names=ownerNames();
+  const opts=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+  const timeDisp=ms>0?fmtT(ms):"READY";
+  const timeCls=ms>0?(ms<=URGENT_MS?"soon":"upcoming"):"ready";
+  const subText=ms>0
+    ? `Available to claim — crafts in ${fmtT(ms)} · send mats to ${esc(c.owner)} after claiming`
+    : `Ready now — claim it and send mats to ${esc(c.owner)}`;
+  const claimArea=canClaim()?`<div class="claim-inline">
+    <select class="claim-sel" id="dclsel-${c.id}-${t}">
+      <option value="">— Your name —</option>${opts}
+    </select>
+    <button class="ab ab-claim" onclick="claimCloth('${c.id}','${t}','dash')">Claim It</button>
+  </div>`:"";
+  const unBtn=canToggleAvail()?`<button class="ab ab-unavail" onclick="toggleAvail('${c.id}','${t}')">Remove</button>`:"";
+  return `<div class="action-card claimed">
+    <div class="ac-top">
+      <span class="ac-icon">🟢</span>
+      <div class="ac-body"><div class="ac-title">${clothLine(c,t,qty,isSpec)}</div>
+        <div class="ac-sub">${subText}</div></div>
+      <div class="ac-time ${timeCls}">${timeDisp}</div>
+    </div>
+    <div class="ac-actions">${claimArea}${unBtn}</div>
+  </div>`;
+}
+function renderDashCard_claimed({c,t,cl,ms,qty,isSpec}) {
+  const timeDisp=ms>0?fmtT(ms):"READY";
+  const timeCls=ms>0?(ms<=URGENT_MS?"soon":"upcoming"):"ready";
+  const matsBtn=canClaim()?`<button class="ab ab-mats" onclick="toggleMats('${c.id}','${t}')">📦 Mark Mats Sent</button>`:"";
+  const unclaimBtn=canToggleAvail()?`<button class="ab ab-unclaim" onclick="unclaim('${c.id}','${t}')">Unclaim</button>`:"";
+  return `<div class="action-card warn">
+    <div class="ac-top">
+      <span class="ac-icon">📦</span>
+      <div class="ac-body">
+        <div class="ac-title">${clothLine(c,t,qty,isSpec)}</div>
+        <div class="ac-sub">Claimed by <b>${esc(cl.claimedBy)}</b> — mats not yet sent to ${esc(c.owner)}</div>
+      </div>
+      <div class="ac-time ${timeCls}">${timeDisp}</div>
+    </div>
+    <div class="ac-actions">${matsBtn}${unclaimBtn}</div>
+  </div>`;
+}
+function renderDashCard_matsent({c,t,cl,ms,qty,isSpec}) {
+  const timeDisp=ms>0?fmtT(ms):"READY";
+  const timeCls=ms>0?"upcoming":"ready";
+  const undoBtn=canClaim()?`<button class="ab ab-unclaim" onclick="toggleMats('${c.id}','${t}')">Undo</button>`:"";
+  return `<div class="action-card mats-sent">
+    <div class="ac-top">
+      <span class="ac-icon">✉️</span>
+      <div class="ac-body">
+        <div class="ac-title">${clothLine(c,t,qty,isSpec)}</div>
+        <div class="ac-sub">Claimed by <b>${esc(cl.claimedBy)}</b> · Mats sent to ${esc(c.owner)} ✓</div>
+      </div>
+      <div class="ac-time ${timeCls}">${timeDisp}</div>
+    </div>
+    <div class="ac-actions">${undoBtn}</div>
+  </div>`;
+}
+function renderDashCard_upcoming({c,t,cl,ms,qty,isSpec}) {
+  const timeCls=ms<=URGENT_MS?"soon":"upcoming";
+  const claimInfo=cl.claimedBy?`Claimed by <b>${esc(cl.claimedBy)}</b>${cl.matsSent?" · Mats sent ✓":" · Mats not sent yet"}`:"Not yet claimed";
+  const cdBtn=canSetCD()?`<button class="ab ab-mats" onclick="openCDModal('${c.id}','${t}')">Adjust CD</button>`:"";
+  return `<div class="action-card upcoming">
+    <div class="ac-top">
+      <span class="ac-icon">⏳</span>
+      <div class="ac-body">
+        <div class="ac-title">${clothLine(c,t,qty,isSpec)}</div>
+        <div class="ac-sub">${claimInfo}</div>
+      </div>
+      <div class="ac-time ${timeCls}">${fmtT(ms)}</div>
+    </div>
+    <div class="ac-actions">${cdBtn}</div>
+  </div>`;
+}
+
+// ─ Person tab page ─
+function renderPersonPage(person) {
+  const myChars=chars.filter(c=>c.owner===person);
+  if(!myChars.length) return `<div style="padding:14px 12px"><div class="empty-state"><div class="empty-icon">🧙</div>No characters for ${esc(person)}</div></div>`;
+
+  // Stats
+  let readyCt=0,cdCt=0,claimCt=0;
+  myChars.forEach(c=>TYPES.forEach(t=>{
+    const cl=c.cloths[t]; if(!cl.tracked) return;
+    const ms=tLeft(cl.lastCraft);
+    if(ms===0) readyCt++; else cdCt++;
+    if(cl.claimedBy) claimCt++;
+  }));
+
+  const statsHTML=`
+    ${readyCt?`<span class="pstat ready">✅ ${readyCt} Ready</span>`:""}
+    ${cdCt?`<span class="pstat cd">⏱ ${cdCt} On CD</span>`:""}
+    ${claimCt?`<span class="pstat claim">📦 ${claimCt} Claimed</span>`:""}`;
+
+  const charsHTML=myChars.map(c=>renderCharRow(c,person)).join("");
+
+  const renameBtn=canEdit()?`<button class="ab ab-mats btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="openRenamePlayer('${esc(person)}')">✎ Rename</button>`:"";
+  return `<div style="padding:14px 12px;max-width:860px;margin:0 auto">
+    <div class="person-header">
+      <div class="person-name">🧙 ${esc(person)}</div>
+      <div class="person-stats">${statsHTML}${renameBtn}</div>
+    </div>
+    ${charsHTML}
+  </div>`;
+}
+
+function renderCharRow(c,person) {
+  const spCls={none:"sp-none",moon:"sp-moon",shad:"sp-shad",spell:"sp-spell"}[c.spec];
+  const spTxt=c.spec!=="none"?`★ ${SNAME[c.spec]} Tailoring`:"No Spec";
+  const rows=TYPES.map(t=>renderClothRowItem(c,t)).join("");
+  const renameCharBtn=canEdit()?`<button class="ab ab-unavail btn-sm" style="font-size:10px;padding:4px 9px;min-height:28px;margin-left:auto" onclick="openRenameChar('${c.id}')">✎</button>`:"";
+  return `<div class="char-row">
+    <div class="char-row-hdr">
+      <span class="char-row-name">${esc(c.name)}</span>
+      <span class="spec-pill ${spCls}">${esc(spTxt)}</span>
+      ${renameCharBtn}
+    </div>
+    <div class="cloth-rows-list">${rows}</div>
+  </div>`;
+}
+
+function renderClothRowItem(c,t) {
+  const cl=c.cloths[t], isSpec=c.spec===t, qty=yld(c,t);
+  if(!cl.tracked) return `<div class="cloth-row-item off">
+    <span class="cr-dot d-${t}"></span><span class="cr-name ${t}">${TNAME[t]}</span>
+    <span style="font-size:11px;color:var(--dim)">Not tracked</span>
+  </div>`;
+
+  const ms=tLeft(cl.lastCraft), st=tSt(ms), p=pct(cl.lastCraft);
+  const timeCls={ready:"t-ready",soon:"t-soon",upcoming:"t-upcoming",waiting:"t-wait"}[st];
+
+  // Action buttons
+  const cdBtn=canSetCD()?`<button class="ab ab-mats btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="openCDModal('${c.id}','${t}')">Set CD</button>`:"";
+  const availBtn=canToggleAvail()?`<button class="ab ${cl.available?"ab-unavail":"ab-avail"} btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="toggleAvail('${c.id}','${t}')">${cl.available?"🟢 Available":"⬜ Mark Available"}</button>`:"";
+
+  // Claim section
+  let claimHTML="";
+  if(cl.claimedBy) {
+    const matsBtn=canClaim()?`<button class="ab ${cl.matsSent?"ab-mats-done":"ab-mats"} btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="toggleMats('${c.id}','${t}')">${cl.matsSent?"✓ Mats Sent":"📦 Mats Sent?"}</button>`:"";
+    const unclaimBtn=canToggleAvail()?`<button class="ab ab-unclaim btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="unclaim('${c.id}','${t}')">Unclaim</button>`:"";
+    claimHTML=`<span class="chip chip-claimed">👤 ${esc(cl.claimedBy)}</span>${cl.matsSent?`<span class="chip chip-mats-sent">✉️ Mats sent</span>`:`<span class="chip chip-mats">📦 Mats needed</span>`}${matsBtn}${unclaimBtn}`;
+  } else if(cl.available&&canClaim()) {
+    const names=ownerNames();
+    const opts=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("");
+    claimHTML=`<span class="chip chip-avail">🟢 Available</span>
+      <select class="claim-sel" id="pclsel-${c.id}-${t}" style="font-size:12px;padding:5px 20px 5px 8px;max-width:140px">
+        <option value="">— Your name —</option>${opts}
+      </select>
+      <button class="ab ab-claim btn-sm" style="font-size:10px;padding:5px 10px;min-height:30px" onclick="claimCloth('${c.id}','${t}','person')">Claim</button>`;
+  } else if(cl.available) {
+    claimHTML=`<span class="chip chip-avail">🟢 Available</span>`;
+  }
+
+  return `<div class="cloth-row-item">
+    <span class="cr-dot d-${t}"></span>
+    <span class="cr-name ${t}">${TNAME[t]}${isSpec?" ★":""}</span>
+    <span class="cr-time ${timeCls}">${fmtT(ms)}</span>
+    <div class="cr-bar"><div class="cr-fill ${t}" style="width:${p}%"></div></div>
+    <span class="cr-yield"><b>${qty}×</b>${isSpec?` <span style="color:var(--gold);font-size:10px">(★)</span>`:""}</span>
+    <div class="cr-actions">${cdBtn}${availBtn}${claimHTML}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// CLAIM ACTIONS
+// ═══════════════════════════════════════
+async function toggleAvail(charId,t) {
+  chars=chars.map(c=>{
+    if(c.id!==charId) return c;
+    const cl=c.cloths[t];
+    const nowAvail=!cl.available;
+    return {...c,cloths:{...c.cloths,[t]:{...cl,available:nowAvail,
+      claimedBy:nowAvail?cl.claimedBy:"",matsSent:nowAvail?cl.matsSent:false}}};
+  });
+  render(); await save();
+  toast(chars.find(c=>c.id===charId).cloths[t].available?"Marked as available.":"Marked unavailable.");
+}
+
+async function claimCloth(charId,t,prefix) {
+  const selId=`${prefix==="dash"?"dclsel":"pclsel"}-${charId}-${t}`;
+  const sel=document.getElementById(selId);
+  const name=sel?sel.value:"";
+  if(!name){toast("Select your name first.");return;}
+  chars=chars.map(c=>c.id!==charId?c:
+    {...c,cloths:{...c.cloths,[t]:{...c.cloths[t],claimedBy:name,matsSent:false}}});
+  render(); await save(); toast(`${name} claimed ${TNAME[t]}!`);
+}
+
+async function unclaim(charId,t) {
+  chars=chars.map(c=>c.id!==charId?c:
+    {...c,cloths:{...c.cloths,[t]:{...c.cloths[t],claimedBy:"",matsSent:false}}});
+  render(); await save(); toast("Claim cleared.");
+}
+
+async function toggleMats(charId,t) {
+  chars=chars.map(c=>{
+    if(c.id!==charId) return c;
+    return {...c,cloths:{...c.cloths,[t]:{...c.cloths[t],matsSent:!c.cloths[t].matsSent}}};
+  });
+  render(); await save();
+  toast(chars.find(c=>c.id===charId).cloths[t].matsSent?"Mats marked sent! ✉️":"Mats unmarked.");
+}
+
+// ═══════════════════════════════════════
 // CD MODAL
-// ═══════════════════════════════════════════
-function openCDModal(charId, cloth) {
-  cdTarget={charId, cloth};
+// ═══════════════════════════════════════
+function openCDModal(charId,cloth) {
+  cdTarget={charId,cloth};
   const c=chars.find(x=>x.id===charId);
   document.getElementById("cd-title").textContent=`${c.name} · ${TNAME[cloth]}`;
-  // Pre-fill remaining time if cooldown is active
   const ms=tLeft(c.cloths[cloth].lastCraft);
   if(ms>0){
-    const totalMin=Math.ceil(ms/60000);
-    document.getElementById("cd-d").value=Math.floor(totalMin/1440);
-    document.getElementById("cd-h").value=Math.floor((totalMin%1440)/60);
-    document.getElementById("cd-m").value=totalMin%60;
+    const tm=Math.ceil(ms/60000);
+    document.getElementById("cd-d").value=Math.floor(tm/1440);
+    document.getElementById("cd-h").value=Math.floor((tm%1440)/60);
+    document.getElementById("cd-m").value=tm%60;
   } else {
     document.getElementById("cd-d").value=0;
     document.getElementById("cd-h").value=0;
     document.getElementById("cd-m").value=0;
   }
   document.getElementById("cd-dt").value=nowLocal();
-  cdTab("rem");
-  openModal("cd-modal");
+  cdTab("rem"); openModal("cd-modal");
 }
-
 function cdTab(tab) {
   document.getElementById("cd-tab-rem").classList.toggle("active",tab==="rem");
   document.getElementById("cd-tab-when").classList.toggle("active",tab==="when");
   document.getElementById("cd-panel-rem").style.display=tab==="rem"?"":"none";
   document.getElementById("cd-panel-when").style.display=tab==="when"?"":"none";
 }
-
 async function saveCDRemaining() {
   const d=parseInt(document.getElementById("cd-d").value)||0;
   const h=parseInt(document.getElementById("cd-h").value)||0;
   const m=parseInt(document.getElementById("cd-m").value)||0;
   const remMs=(d*1440+h*60+m)*60000;
-  if(remMs<=0){ await saveCDReady(); return; }
-  if(remMs>CD_MS){ toast("⚠ Max remaining time is 3d 20h."); return; }
-  // Work backwards: lastCraft = now - (CD_MS - remMs)
-  const lastCraft=Date.now()-(CD_MS-remMs);
-  applyCD(lastCraft); toast("Cooldown updated.");
+  if(remMs<=0){await saveCDReady();return;}
+  if(remMs>CD_MS){toast("⚠ Max 3d 20h.");return;}
+  applyCD(Date.now()-(CD_MS-remMs)); toast("Cooldown updated.");
 }
-
 async function saveCDCraftTime() {
   const val=document.getElementById("cd-dt").value; if(!val) return;
-  const lastCraft=new Date(val).getTime();
-  if(Date.now()-lastCraft>=CD_MS){ await saveCDReady(); return; }
-  applyCD(lastCraft); toast("Cooldown saved.");
+  const lc=new Date(val).getTime();
+  if(Date.now()-lc>=CD_MS){await saveCDReady();return;}
+  applyCD(lc); toast("Cooldown saved.");
 }
-
-async function saveCDReady() {
-  applyCD(null); toast("Marked as ready.");
-}
-
+async function saveCDReady(){applyCD(null);toast("Marked as ready.");}
 async function applyCD(lastCraft) {
   chars=chars.map(c=>c.id!==cdTarget.charId?c:
     {...c,cloths:{...c.cloths,[cdTarget.cloth]:{...c.cloths[cdTarget.cloth],lastCraft}}});
   closeModal("cd-modal"); render(); await save();
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // CHAR MODAL
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 function setCharTab(t) {
   document.getElementById("char-type").value=t;
   document.getElementById("tab-mine").classList.toggle("active",t==="mine");
@@ -904,10 +1183,7 @@ function setCharTab(t) {
 }
 function updateSpecHint() {
   const v=document.getElementById("char-spec").value;
-  const h={none:"1× each cloth per 3d 20h cooldown.",
-    moon:"2× Mooncloth, 1× others. (3d 20h CD)",
-    shad:"2× Shadowcloth, 1× others. (3d 20h CD)",
-    spell:"2× Spellcloth, 1× others. (3d 20h CD)"};
+  const h={none:"1× each cloth per 3d 20h cooldown.",moon:"2× Mooncloth, 1× others.",shad:"2× Shadowcloth, 1× others.",spell:"2× Spellcloth, 1× others."};
   document.getElementById("spec-hint").textContent=h[v];
 }
 function buildClothRows(existing) {
@@ -916,18 +1192,16 @@ function buildClothRows(existing) {
     const on=cl.tracked;
     return `<div class="ccrow${on?"":" off"}" id="ccrow-${t}">
       <div class="ccrow-top">
-        <div class="ccrow-lbl"><span class="dot d-${t}"></span>
-          <span class="cl-name ${t}" style="font-size:11px">${TNAME[t]}</span></div>
-        <label class="ccrow-chk">
-          <input type="checkbox" id="trk-${t}"${on?" checked":""} onchange="toggleCC('${t}')"> Track
-        </label>
+        <div class="ccrow-lbl"><span class="cr-dot d-${t}" style="width:8px;height:8px;border-radius:50%;flex-shrink:0"></span>
+          <span class="cr-name ${t}" style="font-size:11px">${TNAME[t]}</span></div>
+        <label class="ccrow-chk"><input type="checkbox" id="trk-${t}"${on?" checked":""} onchange="toggleCC('${t}')"> Track</label>
       </div>
       <div id="ccdet-${t}" style="${on?"":"display:none"}">
         <div class="two-col">
           <div><div class="slabel">Sends cloth to:</div>
-            <input type="text" class="sinput" id="snd-${t}" value="${esc(cl.sendTo||"")}" placeholder="Me, Friend1…" autocomplete="off"></div>
+            <input type="text" class="sinput" id="snd-${t}" value="${esc(cl.sendTo||"")}" placeholder="e.g. ${ownerName}" autocomplete="off"></div>
           <div><div class="slabel">Receives mats from:</div>
-            <input type="text" class="sinput" id="rcv-${t}" value="${esc(cl.recvFrom||"")}" placeholder="Me, or blank" autocomplete="off"></div>
+            <input type="text" class="sinput" id="rcv-${t}" value="${esc(cl.recvFrom||"")}" placeholder="e.g. ${ownerName}" autocomplete="off"></div>
         </div>
       </div>
     </div>`;
@@ -944,70 +1218,45 @@ function openAddModal() {
   document.getElementById("char-name").value="";
   document.getElementById("char-owner").value="";
   document.getElementById("char-spec").value="none";
-  updateSpecHint();
-  document.getElementById("tab-mine").style.display="";
-  document.getElementById("tab-friend").style.display="";
-  setCharTab("mine"); buildClothRows(null);
+  document.getElementById("tab-mine").textContent=`👤 ${ownerName}'s Character`;
+  updateSpecHint(); setCharTab("mine"); buildClothRows(null);
   openModal("char-modal");
-}
-function openEditModal(id) {
-  editingId=id;
-  const c=chars.find(x=>x.id===id);
-  document.getElementById("char-modal-title").textContent=`Edit: ${c.name}`;
-  document.getElementById("char-name").value=c.name;
-  document.getElementById("char-owner").value=c.owner;
-  document.getElementById("char-spec").value=c.spec||"none";
-  updateSpecHint();
-  document.getElementById("tab-mine").style.display=c.type==="mine"?"":"none";
-  document.getElementById("tab-friend").style.display=c.type==="friend"?"":"none";
-  document.getElementById("tab-mine").classList.toggle("active",c.type==="mine");
-  document.getElementById("tab-friend").classList.toggle("active",c.type==="friend");
-  document.getElementById("char-type").value=c.type;
-  document.getElementById("owner-col").style.display=c.type==="friend"?"":"none";
-  buildClothRows(c); openModal("char-modal");
 }
 async function saveCharacter() {
   const name=document.getElementById("char-name").value.trim();
   if(!name){alert("Enter a character name.");return;}
   const type=document.getElementById("char-type").value;
-  const owner=type==="mine"?"Me":(document.getElementById("char-owner").value.trim()||"Friend");
+  const owner=type==="mine"?ownerName:(document.getElementById("char-owner").value.trim()||"Friend");
   const spec=document.getElementById("char-spec").value;
   const cloths={};
   TYPES.forEach(t=>{
-    const lastCraft=editingId?(chars.find(c=>c.id===editingId)?.cloths[t]?.lastCraft??null):null;
-    cloths[t]={
-      tracked:document.getElementById(`trk-${t}`)?.checked||false,
+    const prev=editingId?chars.find(c=>c.id===editingId)?.cloths[t]:null;
+    cloths[t]={tracked:document.getElementById(`trk-${t}`)?.checked||false,
       sendTo:document.getElementById(`snd-${t}`)?.value.trim()||"",
       recvFrom:document.getElementById(`rcv-${t}`)?.value.trim()||"",
-      lastCraft
-    };
+      lastCraft:prev?.lastCraft??null,available:prev?.available??false,
+      claimedBy:prev?.claimedBy??"",matsSent:prev?.matsSent??false};
   });
   const entry={name,type,owner,spec,cloths};
   chars=editingId&&chars.find(c=>c.id===editingId)
-    ? chars.map(c=>c.id===editingId?{...c,...entry}:c)
-    : [...chars,{...entry,id:"c"+Date.now()}];
+    ?chars.map(c=>c.id===editingId?{...c,...entry}:c)
+    :[...chars,{...entry,id:"c"+Date.now()}];
   closeModal("char-modal"); render(); await save(); toast("Character saved.");
 }
-async function removeChar(id) {
-  if(!confirm("Remove this character?")) return;
-  chars=chars.filter(c=>c.id!==id);
-  render(); await save(); toast("Removed.");
-}
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 // SHARE MODAL
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════
 function openModal(id) {
   if(id==="share-modal") buildShareLinks();
   document.getElementById(id).classList.add("open");
 }
-function closeModal(id){ document.getElementById(id).classList.remove("open"); }
-
+function closeModal(id){document.getElementById(id).classList.remove("open");}
 function buildShareLinks() {
   const links=[
-    {key:"owner", label:"👑 Owner Link",    desc:"Full access — keep this for yourself only.", color:"#c8a84b", url:buildShareLink("owner",  keys.owner)},
-    {key:"friend",label:"🤝 Friend Link",   desc:"View everything + reset friend character cooldowns.", color:"#5d8aa8", url:buildShareLink("friend", keys.friend)},
-    {key:"view",  label:"👁 View-Only",     desc:"Read-only. No changes allowed.",               color:"#9b59b6", url:buildShareLink("viewer", "view")},
+    {key:"owner", label:"👑 Owner Link",  desc:`Full access (${ownerName} only — keep private).`,                color:"#c8a84b",url:buildShareLink("owner",  keys.owner)},
+    {key:"friend",label:"🤝 Friend Link", desc:"Claim cloth, mark mats sent, set cooldowns.",                    color:"#5d8aa8",url:buildShareLink("friend", keys.friend)},
+    {key:"view",  label:"👁 View-Only",   desc:"Read-only view — perfect for spectators.",                       color:"#9b59b6",url:buildShareLink("viewer", "view")},
   ];
   document.getElementById("share-links-content").innerHTML=links.map(l=>`
     <div class="link-block" style="border:1px solid ${l.color}22">
@@ -1019,12 +1268,61 @@ function buildShareLinks() {
         onclick="copyLink('${l.key}')">Copy Link</button>
     </div>`).join("");
 }
-
 function copyLink(key) {
-  const url = document.getElementById(`lurl-${key}`).textContent;
+  const url=document.getElementById(`lurl-${key}`).textContent;
   navigator.clipboard.writeText(url)
-    .then(()=>{ const b=document.getElementById(`cpbtn-${key}`); b.textContent="✓ Copied!"; setTimeout(()=>b.textContent="Copy Link",2000); })
+    .then(()=>{const b=document.getElementById(`cpbtn-${key}`);b.textContent="✓ Copied!";setTimeout(()=>b.textContent="Copy Link",2000);})
     .catch(()=>prompt("Copy this link:",url));
+}
+// ═══════════════════════════════════════
+// RENAME
+// ═══════════════════════════════════════
+let renameTarget = null;
+
+function openRenameChar(charId) {
+  const c=chars.find(x=>x.id===charId); if(!c) return;
+  renameTarget={charId, oldOwner:c.owner};
+  document.getElementById("rename-title").textContent="Rename Character";
+  document.getElementById("rename-label-char").style.display="";
+  document.getElementById("rename-char-name").value=c.name;
+  document.getElementById("rename-label-owner").textContent="Player Name";
+  document.getElementById("rename-owner-name").value=c.owner;
+  openModal("rename-modal");
+}
+
+function openRenamePlayer(ownerN) {
+  renameTarget={charId:null, oldOwner:ownerN};
+  document.getElementById("rename-title").textContent=`Rename Player: ${ownerN}`;
+  document.getElementById("rename-label-char").style.display="none";
+  document.getElementById("rename-char-name").value="";
+  document.getElementById("rename-label-owner").textContent="New Player Name";
+  document.getElementById("rename-owner-name").value=ownerN;
+  openModal("rename-modal");
+}
+
+async function saveRename() {
+  const newChar=document.getElementById("rename-char-name").value.trim();
+  const newOwner=document.getElementById("rename-owner-name").value.trim();
+  if(!newOwner){alert("Player name can't be empty.");return;}
+  if(renameTarget.charId) {
+    if(!newChar){alert("Character name can't be empty.");return;}
+    chars=chars.map(c=>{
+      if(c.id!==renameTarget.charId) return c;
+      return {...c,name:newChar,owner:newOwner};
+    });
+    if(newOwner!==renameTarget.oldOwner) {
+      chars=chars.map(c=>c.id===renameTarget.charId?c:
+        c.owner===renameTarget.oldOwner?{...c,owner:newOwner}:c);
+    }
+  } else {
+    chars=chars.map(c=>c.owner===renameTarget.oldOwner?{...c,owner:newOwner}:c);
+  }
+  if(renameTarget.oldOwner===ownerName) {
+    ownerName=newOwner; localStorage.setItem(LS_OWNER,ownerName);
+    document.getElementById("settings-name").value=ownerName;
+    updateRoleUI();
+  }
+  closeModal("rename-modal"); render(); await save(); toast("Renamed.");
 }
 
 boot();
